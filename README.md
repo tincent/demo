@@ -1,0 +1,1 @@
+tincent android demo build on android studio
