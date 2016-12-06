@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+android {
+    //user apache http client library
+    useLibrary 'org.apache.http.legacy'
+
+    compileSdkVersion 23
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        applicationId "com.tincent.demo"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //个推家配置开始
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+        }
+
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "B2iIlpGGTA6QN9qufTh7k9",
+                GETUI_APP_KEY   : "VHDJjfFgeIAMrUe18iuCq7",
+                GETUI_APP_SECRET: "5jj7pUp6BfAwFogTLoFIZ4",
+        ]
+
+        //个推配置结束
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+//应用Bugtags插件
+apply plugin: 'com.bugtags.library.plugin'
+
+//Bugtags 插件配置
+bugtags {
+    appKey "177b2ddacf5dd6903fee3fe404a628c1"
+    appSecret "abca5814ece0de8a959c0cb40dcf70c8"
+    mappingUploadEnabled true
+
+    //网络跟踪功能配置(企业版)
+    trackingNetworkEnabled false
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile project(':tincent')
+    compile 'com.getui:sdk:2.9.5.0'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    testCompile 'junit:junit:4.12'
+
+    //for leak canary lib
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    // for bugtags lib
+    debugCompile 'com.bugtags.library:bugtags-lib:latest.integration'
+    debugCompile('com.bugtags.library:insta:latest.integration')
+    releaseCompile 'com.bugtags.library:bugtags-noop:latest.integration'
+
+    // for umeng lib
+    compile 'com.umeng.analytics:analytics:latest.integration'
+}

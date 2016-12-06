@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tincent.demo">
+
+    <application
+        android:name=".DemoApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.LeakActivity" />
+        //个推配置开始
+        <service
+            android:name=".service.DemoPushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice" />
+        <service android:name=".service.DemoIntentService" />
+        //个推配置结束
+    </application>
+
+</manifest>
